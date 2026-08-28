@@ -216,6 +216,4 @@ func TestDetect_AlinuxEcosystemResolves(t *testing.T) {
 			t.Fatalf("alinux:%s must not resolve to the Microsoft branch", rel)
 		}
 	}
-	// Detect must not panic constructing an alinux ScanResult.
-	_ = scanTypes.ScanResult{Family: "alinux", Release: "4"}
 }
