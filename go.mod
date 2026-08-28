@@ -26,6 +26,11 @@ require (
 	oras.land/oras-go/v2 v2.6.2
 )
 
+// TODO: temporary local checkout for Alibaba Cloud Linux (alinux) ecosystem
+// support (../vuls-data-update feat/alinux-oval). Replace with a real version
+// bump once the upstream PR is merged.
+replace github.com/MaineK00n/vuls-data-update => ../vuls-data-update
+
 require (
 	filippo.io/edwards25519 v1.1.1 // indirect
 	github.com/MaineK00n/go-microsoft-version v0.0.0-20260325021654-1d9206bdeffc // indirect
