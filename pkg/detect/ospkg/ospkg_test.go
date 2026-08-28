@@ -198,3 +198,24 @@ func TestDetect(t *testing.T) {
 		})
 	}
 }
+
+// TestDetect_AlinuxEcosystemResolves verifies that Alibaba Cloud Linux
+// (alinux:3 / alinux:4) resolves through ecosystemTypes.GetEcosystem and is
+// routed to the generic base.Detect path (i.e. NOT the Microsoft branch in
+// ospkg.Detect). It exercises GetEcosystem for both supported releases.
+func TestDetect_AlinuxEcosystemResolves(t *testing.T) {
+	for _, rel := range []string{"3", "4"} {
+		eco, err := ecosystemTypes.GetEcosystem("alinux", rel)
+		if err != nil {
+			t.Fatalf("GetEcosystem(alinux,%s): %v", rel, err)
+		}
+		if string(eco) != "alinux:"+rel {
+			t.Fatalf("ecosystem = %q, want alinux:%s", eco, rel)
+		}
+		if eco == ecosystemTypes.EcosystemTypeMicrosoft {
+			t.Fatalf("alinux:%s must not resolve to the Microsoft branch", rel)
+		}
+	}
+	// Detect must not panic constructing an alinux ScanResult.
+	_ = scanTypes.ScanResult{Family: "alinux", Release: "4"}
+}
